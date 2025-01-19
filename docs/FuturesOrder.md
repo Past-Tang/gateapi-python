@@ -1,37 +1,35 @@
 # FuturesOrder
 
-Futures order details
-## Properties
-Name | Type | Description | Notes
+期货订单详情
+## 属性
+名称 | 类型 | 描述 | 备注
 ------------ | ------------- | ------------- | -------------
-**id** | **int** | Futures order ID | [optional] [readonly] 
-**user** | **int** | User ID | [optional] [readonly] 
-**create_time** | **float** | Creation time of order | [optional] [readonly] 
-**finish_time** | **float** | Order finished time. Not returned if order is open | [optional] [readonly] 
-**finish_as** | **str** | How the order was finished.  - filled: all filled - cancelled: manually cancelled - liquidated: cancelled because of liquidation - ioc: time in force is &#x60;IOC&#x60;, finish immediately - auto_deleveraged: finished by ADL - reduce_only: cancelled because of increasing position while &#x60;reduce-only&#x60; set- position_closed: cancelled because of position close - position_closed: canceled because the position was closed - reduce_out: only reduce positions by excluding hard-to-fill orders - stp: cancelled because self trade prevention  | [optional] [readonly] 
-**status** | **str** | Order status  - &#x60;open&#x60;: waiting to be traded - &#x60;finished&#x60;: finished | [optional] [readonly] 
-**contract** | **str** | Futures contract | 
-**size** | **int** | Order size. Specify positive number to make a bid, and negative number to ask | 
-**iceberg** | **int** | Display size for iceberg order. 0 for non-iceberg. Note that you will have to pay the taker fee for the hidden size | [optional] 
-**price** | **str** | Order price. 0 for market order with &#x60;tif&#x60; set as &#x60;ioc&#x60; | [optional] 
-**close** | **bool** | Set as &#x60;true&#x60; to close the position, with &#x60;size&#x60; set to 0 | [optional] [default to False]
-**is_close** | **bool** | Is the order to close position | [optional] [readonly] 
-**reduce_only** | **bool** | Set as &#x60;true&#x60; to be reduce-only order | [optional] [default to False]
-**is_reduce_only** | **bool** | Is the order reduce-only | [optional] [readonly] 
-**is_liq** | **bool** | Is the order for liquidation | [optional] [readonly] 
-**tif** | **str** | Time in force  - gtc: GoodTillCancelled - ioc: ImmediateOrCancelled, taker only - poc: PendingOrCancelled, makes a post-only order that always enjoys a maker fee - fok: FillOrKill, fill either completely or none | [optional] [default to 'gtc']
-**left** | **int** | Size left to be traded | [optional] [readonly] 
-**fill_price** | **str** | Fill price of the order | [optional] [readonly] 
-**text** | **str** | User defined information. If not empty, must follow the rules below:  1. prefixed with &#x60;t-&#x60; 2. no longer than 28 bytes without &#x60;t-&#x60; prefix 3. can only include 0-9, A-Z, a-z, underscore(_), hyphen(-) or dot(.) Besides user defined information, reserved contents are listed below, denoting how the order is created:  - web: from web - api: from API - app: from mobile phones - auto_deleveraging: from ADL - liquidation: from liquidation - insurance: from insurance  | [optional] 
-**tkfr** | **str** | Taker fee | [optional] [readonly] 
-**mkfr** | **str** | Maker fee | [optional] [readonly] 
-**refu** | **int** | Reference user ID | [optional] [readonly] 
-**auto_size** | **str** | Set side to close dual-mode position. &#x60;close_long&#x60; closes the long side; while &#x60;close_short&#x60; the short one. Note &#x60;size&#x60; also needs to be set to 0 | [optional] 
-**stp_id** | **int** | Orders between users in the same &#x60;stp_id&#x60; group are not allowed to be self-traded  1. If the &#x60;stp_id&#x60; of two orders being matched is non-zero and equal, they will not be executed. Instead, the corresponding strategy will be executed based on the &#x60;stp_act&#x60; of the taker. 2. &#x60;stp_id&#x60; returns &#x60;0&#x60; by default for orders that have not been set for &#x60;STP group&#x60; | [optional] [readonly] 
-**stp_act** | **str** | Self-Trading Prevention Action. Users can use this field to set self-trade prevetion strategies  1. After users join the &#x60;STP Group&#x60;, he can pass &#x60;stp_act&#x60; to limit the user&#39;s self-trade prevetion strategy. If &#x60;stp_act&#x60; is not passed, the default is &#x60;cn&#x60; strategy。 2. When the user does not join the &#x60;STP group&#x60;, an error will be returned when passing the &#x60;stp_act&#x60; parameter。 3. If the user did not use &#39;stp_act&#39; when placing the order, &#39;stp_act&#39; will return &#39;-&#39;  - cn: Cancel newest, Cancel new orders and keep old ones - co: Cancel oldest, Cancel old orders and keep new ones - cb: Cancel both, Both old and new orders will be cancelled | [optional] 
-**amend_text** | **str** | The custom data that the user remarked when amending the order | [optional] [readonly] 
-**biz_info** | **str** | Additional information | [optional] [readonly] 
+**id** | **int** | 期货订单ID | [可选] [只读] 
+**user** | **int** | 用户ID | [可选] [只读] 
+**create_time** | **float** | 订单创建时间 | [可选] [只读] 
+**finish_time** | **float** | 订单完成时间。如果订单未完成则不返回 | [可选] [只读] 
+**finish_as** | **str** | 订单完成原因  - filled: 全部成交 - cancelled: 手动取消 - liquidated: 因强平取消 - ioc: 时间条件为&#x60;IOC&#x60;，立即完成 - auto_deleveraged: 因ADL完成 - reduce_only: 因增加持仓而取消，同时设置了&#x60;reduce-only&#x60; - position_closed: 因平仓取消 - position_closed: 因仓位关闭取消 - reduce_out: 仅通过排除难成交订单减少仓位 - stp: 因自成交预防取消  | [可选] [只读] 
+**status** | **str** | 订单状态  - &#x60;open&#x60;: 等待成交 - &#x60;finished&#x60;: 已完成 | [可选] [只读] 
+**contract** | **str** | 期货合约 | 
+**size** | **int** | 订单数量。正数表示买入，负数表示卖出 | 
+**iceberg** | **int** | 冰山订单的显示数量。0表示非冰山订单。注意，隐藏部分需要支付taker费用 | [可选] 
+**price** | **str** | 订单价格。0表示市价订单，且&#x60;tif&#x60;设置为&#x60;ioc&#x60; | [可选] 
+**close** | **bool** | 设置为&#x60;true&#x60;以平仓，同时将&#x60;size&#x60;设置为0 | [可选] [默认值为False]
+**is_close** | **bool** | 是否为平仓订单 | [可选] [只读] 
+**reduce_only** | **bool** | 设置为&#x60;true&#x60;表示仅减仓订单 | [可选] [默认值为False]
+**is_reduce_only** | **bool** | 是否为仅减仓订单 | [可选] [只读] 
+**is_liq** | **bool** | 是否为强平订单 | [可选] [只读] 
+**tif** | **str** | 订单有效时间  - gtc: 一直有效直到取消 - ioc: 立即成交或取消，仅限taker - poc: 挂单或取消，始终享受maker费用 - fok: 全部成交或取消，要么全部成交，要么不成交 | [可选] [默认值为'gtc']
+**left** | **int** | 剩余未成交数量 | [可选] [只读] 
+**fill_price** | **str** | 订单成交价格 | [可选] [只读] 
+**text** | **str** | 用户自定义信息。如果不为空，必须遵循以下规则：  1. 以&#x60;t-&#x60;开头 2. 不带&#x60;t-&#x60;前缀时不超过28字节 3. 只能包含0-9, A-Z, a-z, 下划线(_), 连字符(-)或点(.) 除了用户自定义信息，以下为保留内容，表示订单的创建方式：  - web: 来自网页 - api: 来自API - app: 来自手机应用 - auto_deleveraging: 来自ADL - liquidation: 来自强平 - insurance: 来自保险  | [可选] 
+**tkfr** | **str** | Taker费用 | [可选] [只读] 
+**mkfr** | **str** | Maker费用 | [可选] [只读] 
+**refu** | **int** | 推荐用户ID | [可选] [只读] 
+**auto_size** | **str** | 设置平仓方向以关闭双模式仓位。&#x60;close_long&#x60;关闭多头仓位；&#x60;close_short&#x60;关闭空头仓位。注意&#x60;size&#x60;也需要设置为0 | [可选] 
+**stp_id** | **int** | 同一&#x60;stp_id&#x60;组内的用户之间的订单不允许自成交  1. 如果两个匹配订单的&#x60;stp_id&#x60;非零且相等，则不会执行。相反，将根据taker的&#x60;stp_act&#x60;执行相应的策略。 2. 对于未设置&#x60;STP组&#x60;的订单，&#x60;stp_id&#x60;默认返回&#x60;0&#x60; | [可选] [只读] 
+**stp_act** | **str** | 自成交预防策略。用户可以使用此字段设置自成交预防策略  1. 用户加入&#x60;STP组&#x60;后，可以通过&#x60;stp_act&#x60;来限制用户的自成交预防策略。如果未传递&#x60;stp_act&#x60;，则默认为&#x60;cn&#x60;策略。 2. 当用户未加入&#x60;STP组&#x60;时，传递&#x60;stp_act&#x60;参数将返回错误。 3. 如果用户在下单时未使用&#39;stp_act&#39;，则&#39;stp_act&#39;将返回&#39;-&#39;  - cn: 取消最新订单，保留旧订单 - co: 取消最旧订单，保留新订单 - cb: 两者都取消，新旧订单都将被取消 | [可选] 
+**amend_text** | **str** | 用户在修改订单时备注的自定义数据 | [可选] [只读] 
+**biz_info** | **str** | 附加信息 | [可选] [只读] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
-
+[[返回模型列表]](../README.md#文档-模型) [[返回API列表]](../README.md#文档-api-endpoints) [[返回README]](../README.md)
